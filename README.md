@@ -1,4 +1,4 @@
-# RxEventSource: Reactive EventSource Implementation for Java
+# RxEventSource: Reactive EventSource for Java
 
 Implementation of the [ServerSentEvents Protocol][sse] based on
 [RxJava][rxjava].
