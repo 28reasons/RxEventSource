@@ -1,14 +1,36 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'me.tatarka:gradle-retrolambda:3.2.5'
+    }
+}
+
 group 'com.reasons28'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
+apply plugin: 'maven-publish'
+apply plugin: 'me.tatarka.retrolambda'
 
 sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
+    jcenter()
 }
 
 dependencies {
+    compile 'io.reactivex:rxjava:1.1.6'
+
     testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
 }
