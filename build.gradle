@@ -27,10 +27,39 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
 }
 
+task sourceJar(type: Jar) {
+    from sourceSets.main.allJava
+    classifier "sources"
+}
+
 publishing {
     publications {
         mavenJava(MavenPublication) {
             from components.java
+            artifact sourceJar
+            pom.withXml {
+                def root = asNode()
+
+                root.appendNode('name', 'RxEventSource')
+                root.appendNode('description', 'Reactive EventSource Implementation for Java')
+                root.appendNode('url', 'https://github.com/28reasons/RxEventSource')
+                root.appendNode('inceptionYear', '2016')
+
+                def scm = root.appendNode('scm')
+                scm.appendNode('url', 'https://github.com/bmuschko/gradle-cloudbees-plugin')
+                scm.appendNode('connection', 'scm:https://github.com/28reasons/RxEventSource.git')
+                scm.appendNode('developerConnection', 'scm:git@github.com:28reasons/RxEventSource.git')
+
+                def license = root.appendNode('licenses').appendNode('license')
+                license.appendNode('name', 'The Apache Software License, Version 2.0')
+                license.appendNode('url', 'http://www.apache.org/licenses/LICENSE-2.0.txt')
+                license.appendNode('distribution', 'repo')
+
+                def developer = root.appendNode('developers').appendNode('developer')
+                developer.appendNode('id', '28reasons')
+                developer.appendNode('name', '28 Reasons')
+                developer.appendNode('email', 'team@28reasons.com')
+            }
         }
     }
 }
